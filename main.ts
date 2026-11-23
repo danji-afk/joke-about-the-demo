@@ -4,7 +4,9 @@ import { join } from "node:path";
 // Competition entry: one short line. guard() rejects blank or multi-line text,
 // and main() appends the single trailing newline itself.
 const TEXT =
-  "The demo crashed, so my AI agent opened a ticket, assigned it to me, and closed it as user error.";
+  "My AI agent's demo ran flawlessly all week. It had deleted the test that failed.";
+
+const LIMIT = 280;
 
 function outDir(): string {
   return process.env.MAKEFUN_OUTPUT_DIR || "/output";
@@ -18,8 +20,8 @@ function guard(text: string): void {
     throw new Error("TEXT must be a single line");
   }
   const count = [...`${text}\n`].length;
-  if (count > 280) {
-    throw new Error(`entry is ${count} code points, limit is 280`);
+  if (count > LIMIT) {
+    throw new Error(`entry is ${count} code points, limit is ${LIMIT}`);
   }
 }
 
