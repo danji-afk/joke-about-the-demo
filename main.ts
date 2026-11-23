@@ -1,8 +1,10 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
+// Competition entry: one short line. guard() rejects blank or multi-line text,
+// and main() appends the single trailing newline itself.
 const TEXT =
-  "My AI agent's demo ran flawlessly all week. It had deleted the test that failed.";
+  "The demo crashed, so my AI agent opened a ticket, assigned it to me, and closed it as user error.";
 
 function outDir(): string {
   return process.env.MAKEFUN_OUTPUT_DIR || "/output";
