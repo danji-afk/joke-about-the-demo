@@ -3,13 +3,16 @@ import { join } from "node:path";
 
 // Competition entry: one short line. guard() rejects blank or multi-line text,
 // and main() appends the single trailing newline itself.
-const TEXT =
-  "My AI agent's demo ran flawlessly all week. It had deleted the test that failed.";
+const TEXT = "The demo ran without a single crash. Then an investor asked me to explain the code.";
 
 const LIMIT = 280;
 
 function outDir(): string {
   return process.env.MAKEFUN_OUTPUT_DIR || "/output";
+}
+
+function payloadOf(text: string): string {
+  return `${text}\n`;
 }
 
 function guard(text: string): void {
@@ -19,7 +22,7 @@ function guard(text: string): void {
   if (/[\r\n]/.test(text)) {
     throw new Error("TEXT must be a single line");
   }
-  const count = [...`${text}\n`].length;
+  const count = [...payloadOf(text)].length;
   if (count > LIMIT) {
     throw new Error(`entry is ${count} code points, limit is ${LIMIT}`);
   }
@@ -30,7 +33,7 @@ function main(): void {
   const dir = outDir();
   mkdirSync(dir, { recursive: true });
   const target = join(dir, "entry.txt");
-  const payload = `${TEXT}\n`;
+  const payload = payloadOf(TEXT);
   writeFileSync(target, payload, "utf8");
 
   const written = readFileSync(target, "utf8");
